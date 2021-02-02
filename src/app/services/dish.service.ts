@@ -10,6 +10,14 @@ export class DishService {
   constructor() { }
 
   getDishes(): Dish[] {
-  	return DISHES; //getDishes is a method that returns te DIHSES in an array from wherever the service is injected
+  	return DISHES; //getDishes is a method that returns DISHES in an array from wherever the service is injected
+  }
+
+  getDish(id: string): Dish {  //for a specific dish.
+  	return DISHES.filter((dish) => (dish.id === id))[0]; //dish id must match the id supplied as the parameter
+  }
+
+  getFeaturedDish(): Dish {
+  	return DISHES.filter((dish) => dish.featured)[0]; //featured is boolean so it will return either true or false
   }
 }
