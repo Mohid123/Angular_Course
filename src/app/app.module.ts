@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
+import { LeaderService } from './services/leader.service';
 
 import 'hammerjs';
 import { MenuComponent } from './menu/menu.component';
@@ -47,7 +48,8 @@ import { ContactComponent } from './contact/contact.component';//injecting the s
   ],
   providers: [
   DishService,
-  PromotionService
+  PromotionService,
+  LeaderService
   ],
   bootstrap: [AppComponent]
 })
