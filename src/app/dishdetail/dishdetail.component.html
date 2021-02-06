@@ -38,4 +38,8 @@
   	</mat-list>
   </div>
 
+  <div [hidden]="dish"> <!--will be shown while dishes are being loaded and will disappear afterwards-->
+    <mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
+  </div>
+
 </div>

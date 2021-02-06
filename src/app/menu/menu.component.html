@@ -7,7 +7,7 @@
 		</div>
 	</div>
 
-	<div fxFlex>
+	<div fxFlex *ngIf="dishes"><!--using ngIf here to show loading spinner until the dishes are loaded. (See the Promise code for dish.service.ts)-->
 		<mat-grid-list cols="2" rowHeight="200px">
 			<mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]">
 				<!--[routerlink] replaces (click)="onSelect(dish)"-->
@@ -17,6 +17,9 @@
 				</mat-grid-tile-footer>
 			</mat-grid-tile>
 		</mat-grid-list>
+	</div>
+	<div [hidden]="dishes"> <!--will be shown while dishes are being loaded and will disappear afterwards-->
+		<mat-spinner></mat-spinner><h4>Loading... Please Wait</h4>
 	</div>
 	<!-- <app-dishdetail [dish]="selectedDish"></app-dishdetail> -->
 </div>
