@@ -20,7 +20,7 @@ dishes!: Dish[]; // or dishes = DISHES; simply. Typescript recognizes the type a
   ngOnInit(): void {
     //this.dishes = this.dishService.getDishes(); //without promise
     this.dishService.getDishes()
-    .then((dishes) => this.dishes = dishes);
+    .subscribe((dishes) => this.dishes = dishes);
   }
 //through this our menu component will call upon the dishes service and display it according to the menu template
 // remember that we already created the getDishes metjod in our service  
