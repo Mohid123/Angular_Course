@@ -20,6 +20,7 @@ export class DishdetailComponent implements OnInit {
   dishIds!: string[];
   prev!: string;
   next!: string;
+  errMess!: string; //to catch error in case dishes are not returned
 
 
   commentForm!: FormGroup;
@@ -46,7 +47,8 @@ export class DishdetailComponent implements OnInit {
   constructor(private dishService: DishService,
     private route: ActivatedRoute,
     private location: Location,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    @Inject('BaseURL') public BaseURL:any) {
 
     this.createForm();
   }
@@ -99,7 +101,8 @@ onValueChanged(data?: any) { //? means parameter is optional
 //const id = this.route.snapshot.params['id']; //snapshot takes a parameter at that particular point in time with params
 //this.dishService.getDish(id) //params is a built in observable
     this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+      errmess => this.errMess = <any>errmess);
   	//snapshot Contains the information about a route associated with a component loaded.
   }
 

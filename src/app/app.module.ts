@@ -15,7 +15,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSliderModule } from '@angular/material/slider';  
+import { MatSliderModule } from '@angular/material/slider';
+import { HttpClientModule } from '@angular/common/http';
+import { baseURL } from './shared/baseurl';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,6 +52,7 @@ import { LoginComponent } from './login/login.component';//injecting the service
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     MatToolbarModule,
@@ -70,7 +74,9 @@ import { LoginComponent } from './login/login.component';//injecting the service
   providers: [
   DishService,
   PromotionService,
-  LeaderService
+  LeaderService,
+  ProcessHTTPMsgService,
+  {provide: 'BaseURL', useValue: baseURL}
   ],
   entryComponents: [
   LoginComponent 
