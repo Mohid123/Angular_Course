@@ -56,7 +56,7 @@ export class DishService {
 
   getFeaturedDish(): Observable<Dish> {
     return this.http.get<Dish>(baseURL + 'dishes?featured=true').pipe(map(dishes => dishes))
-    .pipe(catchError(this.processHTTPMsgService.handleError));;
+    .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
 //REACTIVE APPROACH
@@ -73,5 +73,16 @@ export class DishService {
     .pipe(catchError(error => error)); //we do not need to explicictly catch the error like the ones from above
   } //bcs getDishIds is already using getDishes( which already has error handler in place).
 
+
+// to update or add a dish to the server and upload
+  putDish(dish: Dish): Observable<Dish> {
+    const httpOptions = {
+      // headers: new HttpHeaders({
+      //   'Content-Type':  'application/json'
+      // })
+    };
+    return this.http.put<Dish>(baseURL + 'dishes/' + dish.id, dish, httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
   //return of(DISHES.map(dish => dish.id ));
 }
