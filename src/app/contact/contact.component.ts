@@ -1,12 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import  { Feedback, ContactType } from '../shared/feedback';
+import { flyinout } from '../animations/app.animation';
 
 //ViewChild allows access to child elements in the DOM
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+  styleUrls: ['./contact.component.scss'],
+  host: {
+    '[@flyinout]': 'true',
+    'style': 'display: block;'
+  },
+  animations: [
+  flyinout()
+  ]
 })
 export class ContactComponent implements OnInit {
 	@ViewChild('fform') feedbackFormDirective:any; //form gets reset back to initial values as specified below

@@ -2,11 +2,20 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Dish } from '../shared/dish';
 // import { DISHES } from '../shared/dishes'; no longer needed bcs we are using a service to fetch the dishes
 import { DishService } from '../services/dish.service';
+import { flyinout, expand } from '../animations/app.animation';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  host: {
+    '[@flyinout]': 'true',
+    'style': 'display: block;'
+  },
+  animations: [
+  flyinout(),
+  expand()
+  ]
 })
 export class MenuComponent implements OnInit {                         
 

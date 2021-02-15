@@ -34,7 +34,8 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
-import { LoginComponent } from './login/login.component';//injecting the service and then adding it to providers below
+import { LoginComponent } from './login/login.component';
+import { HighlightDirective } from './directives/highlight.directive';//injecting the service and then adding it to providers below
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { LoginComponent } from './login/login.component';//injecting the service
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,

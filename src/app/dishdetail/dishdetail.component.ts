@@ -6,11 +6,21 @@ import { DishService } from '../services/dish.service'; //we import this to enab
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
+import {visibility, flyinout, expand} from '../animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  host: {
+    '[@flyinout]': 'true',
+    'style': 'display: block;'
+  },
+  animations: [
+  flyinout(),
+  expand(),
+  visibility()
+  ]
 })
 export class DishdetailComponent implements OnInit {
   @ViewChild('fform') commentFormDirective:any;
@@ -22,6 +32,7 @@ export class DishdetailComponent implements OnInit {
   next!: string;
   errMess!: string; //to catch error in case dishes are not returned
   dishcopy!: Dish;
+  visibility = 'shown';
 
 
   commentForm!: FormGroup;
@@ -101,8 +112,8 @@ onValueChanged(data?: any) { //? means parameter is optional
     this.dishService.getDishIds().subscribe((dishIds) => this.dishIds = dishIds);
 //const id = this.route.snapshot.params['id']; //snapshot takes a parameter at that particular point in time with params
 //this.dishService.getDish(id) //params is a built in observable
-    this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+    this.route.params.pipe(switchMap((params: Params) => {this.visibility = 'hidden'; return this.dishService.getDish(params['id']); }))
+    .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
       errmess => this.errMess = <any>errmess);
   	//snapshot Contains the information about a route associated with a component loaded.
   }

@@ -9,7 +9,7 @@
 
 	<div fxFlex *ngIf="dishes"><!--using ngIf here to show loading spinner until the dishes are loaded. (See the Promise code for dish.service.ts)-->
 		<mat-grid-list cols="2" rowHeight="200px">
-			<mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]">
+			<mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dishdetail', dish.id]" appHighlight>
 				<!--[routerlink] replaces (click)="onSelect(dish)"-->
 				<img height="200px" src="{{ BaseURL + dish.image }}" alt={{dish.name}}>
 				<mat-grid-tile-footer>
