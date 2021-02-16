@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import  { Feedback, ContactType } from '../shared/feedback';
-import { flyinout } from '../animations/app.animation';
+import { flyinout, expand } from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
 
 //ViewChild allows access to child elements in the DOM
 @Component({
@@ -13,7 +14,8 @@ import { flyinout } from '../animations/app.animation';
     'style': 'display: block;'
   },
   animations: [
-  flyinout()
+  flyinout(),
+  expand()
   ]
 })
 export class ContactComponent implements OnInit {
@@ -21,7 +23,12 @@ export class ContactComponent implements OnInit {
 
 	feedbackForm!: FormGroup;
 	feedback!: Feedback;
+  feedbackcopy!: Feedback;
+  feedErrMess!: string;
 	contactType = ContactType;
+
+  isLoading!: boolean
+  isResponsive!: boolean;
 
 	formErrors: any = {
 		'firstname': '',
@@ -52,15 +59,17 @@ export class ContactComponent implements OnInit {
 		}
 	};
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private feedbackService: FeedbackService) {
 
   	this.createForm();
+    this.isLoading = false;
+    this.isResponsive = false;
   }
 
   ngOnInit(): void {
   }
 
-  createForm() {
+  createForm(): void {
     this.feedbackForm = this.fb.group({
       firstname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
       lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
@@ -97,19 +106,38 @@ export class ContactComponent implements OnInit {
   	}
   }
 
-  onSubmit() {
+onSubmit() {
+    this.isLoading = true;
     this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
+    //console.log(this.feedback);
+    this.feedbackService.submitFeedback(this.feedback)
+      .subscribe(feedback => {
+          this.feedback = feedback;
+          console.log(feedback);
+        } ,
+        errmess => {
+          this.feedback = <any>null;
+          this.feedbackcopy = <any>null;
+          this.feedErrMess = <any>errmess;
+        } ,
+        () => {
+          this.isResponsive = true;
+          setTimeout(() => {
+              this.isResponsive = false;
+              this.isLoading = false;
+            } , 5000
+          );
+        });
     this.feedbackForm.reset({
-      firstname: '',
-      lastname: '',
-      telnum: '',
-      email: '',
-      agree: false,
-      contacttype: 'None',
+      firstname: '' ,
+      lastname: '' ,
+      telnum: '' ,
+      email: '' ,
+      agree: false ,
+      contacttype: 'None' ,
       message: ''
     });
-    this.feedbackFormDirective.resetForm();
-}
+  }
+
 
 }
